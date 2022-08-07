@@ -1,0 +1,89 @@
+{
+  "name": "http-client",
+  "displayName": "HTTP Client",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:http-client.newRequest"
+  ],
+  "main": "./out/src/main.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "http-client.newRequest",
+        "title": "HTTP Client: New Request",
+        "shortTitle": "New Request",
+        "icon": "$(add)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "http-client.newRequest",
+          "when": "view == http-client-requests",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "http-client",
+          "title": "HTTP Client",
+          "icon": "$(cloud)"
+        }
+      ]
+    },
+    "views": {
+      "http-client": [
+        {
+          "id": "http-client-requests",
+          "name": "Requests"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "http-client-requests",
+        "contents": "No HTTP requests found.\n[New Request](command:http-client.newRequest)",
+        "when": "config.git.enabled && git.state == initialized && workbenchState == empty"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "esbuild-base": "esbuild ./webview-ui/main.tsx ./src/main.ts --bundle --outdir=out --jsx=automatic --external:vscode --format=cjs --platform=node --inject:./react-shims.ts",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "watch": "npm run esbuild-base -- --sourcemap --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/vscode": "^1.69.1",
+    "@types/vscode-webview": "^1.57.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "esbuild": "^0.14.53",
+    "eslint": "^8.20.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
