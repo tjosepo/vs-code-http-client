@@ -1,0 +1,19 @@
+body {
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+*[tabindex="0"]:focus {
+  outline: 1px solid var(--focus-border);
+  outline-offset: -1px;
+}
+
+*[tabindex="0"]:active {
+  outline: 0 !important;
+}
+
+.code {
+  font-family: var(--vscode-editor-font-family);
+  color: var(--vscode-editor-color);
+}

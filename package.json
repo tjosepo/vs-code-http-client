@@ -4,7 +4,7 @@
   "description": "",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.70.0"
+    "vscode": "^1.68.0"
   },
   "categories": [
     "Other"
@@ -12,7 +12,7 @@
   "activationEvents": [
     "onCommand:http-client.newRequest"
   ],
-  "main": "./out/src/main.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -58,9 +58,10 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "esbuild-base": "esbuild ./webview-ui/main.tsx ./src/main.ts --bundle --outdir=out --jsx=automatic --external:vscode --format=cjs --platform=node --inject:./react-shims.ts",
+    "esbuild-base": "esbuild ./src/webview-ui/app.tsx ./src/extension/main.ts --bundle --outdir=out --jsx=automatic --external:vscode --format=cjs --platform=node --inject:./src/shared/react-shims.ts   --loader:.ttf=dataurl",
     "esbuild": "npm run esbuild-base -- --sourcemap",
-    "watch": "npm run esbuild-base -- --sourcemap --watch",
+    "esbuild2": "node esbuild.config.js",
+    "watch": "node esbuild.config.js",
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -76,13 +77,19 @@
     "@types/vscode-webview": "^1.57.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "@vitejs/plugin-react": "^2.0.1",
     "@vscode/test-electron": "^2.1.5",
     "esbuild": "^0.14.53",
     "eslint": "^8.20.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vite": "^3.0.7"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.4.5",
+    "@vscode/codicons": "^0.0.32",
     "@vscode/webview-ui-toolkit": "^1.0.0",
+    "monaco-editor": "^0.34.0",
+    "node-fetch": "^3.2.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

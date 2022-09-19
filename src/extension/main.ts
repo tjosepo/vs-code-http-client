@@ -1,10 +1,8 @@
 import * as vscode from "vscode";
-import * as sidebar from "./sidebar";
+import * as newRequest from "./new-request";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "http-client" is now active!');
-
-  sidebar.activate(context);
+  newRequest.activate(context);
 }
 
 // this method is called when your extension is deactivated
